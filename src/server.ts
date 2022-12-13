@@ -1,9 +1,25 @@
-import express, { Express, Request, Response } from "express";
+import dotenv from 'dotenv';
+import express, { Express, Request, Response } from 'express';
+import mongoose from 'mongoose';
 
-const app: Express = express();
+dotenv.config();
 
-app.get('/', (req: Request, res: Response) => {
-  res.send("Hello from Marsa!!");
-});
+const DB_URL = process.env.DB_URL!;
 
-app.listen(4000, () => console.log('Server listening at port 4000..'));
+const PORT = process.env.PORT;
+
+const startServer = async () => {
+  mongoose.set('strictQuery', false);
+
+  await mongoose.connect(DB_URL);
+
+  const app: Express = express();
+
+  app.get('/', (req: Request, res: Response) => {
+    res.send('Welcome to Cpanel!');
+  });
+
+  app.listen(PORT, () => console.log(`Server listening at port ${PORT}..`));
+};
+
+startServer();
