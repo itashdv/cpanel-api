@@ -15,9 +15,7 @@ const startServer = async () => {
 
   const app: Express = express();
 
-  app.get('/', (req: Request, res: Response) => {
-    res.send('Welcome to Cpanel!');
-  });
+  app.use(express.static('public'));
 
   app.listen(PORT, () => console.log(`Server listening at port ${PORT}..`));
 };
